@@ -1,36 +1,13 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
-function CreateEvent() {
-  let navigate = useNavigate();
-  const initialValues = {
-    userFirstName: '',
-    userSecondName: '',
-    userEmail: '',
-    userDate: new Date(),
-  };
-
-  const validationSchema = Yup.object().shape({
-    userFirstName: Yup.string().required(),
-    userSecondName: Yup.string().required(),
-    userEmail: Yup.string().email().required(),
-    userDate: Yup.date().required(),
-  });
-
-  const onSubmit = async (data) => {
-    try {
-      await axios.post('http://localhost:3001/events', data);
-      navigate('/');
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
-
+export default function CreateEvent({
+  initialValues,
+  validationSchema,
+  onSubmit,
+}) {
   return (
-    <div className="createEventPage">
+    <div className="createEventPage" data-testid="editEvent">
       <Formik
         initialValues={initialValues}
         onSubmit={onSubmit}
@@ -40,6 +17,7 @@ function CreateEvent() {
           <label>First Name:</label>
           <ErrorMessage name="userFirstName" component="span" />
           <Field
+            data-testid="firstName"
             id="inputCreateEvent"
             name="userFirstName"
             placeholder="first name"
@@ -47,6 +25,7 @@ function CreateEvent() {
           <label>Second Name:</label>
           <ErrorMessage name="userSecondName" component="span" />
           <Field
+            data-testid="secondName"
             id="inputCreateEvent"
             name="userSecondName"
             placeholder="second name"
@@ -54,6 +33,7 @@ function CreateEvent() {
           <label>Email:</label>
           <ErrorMessage name="userEmail" component="span" />
           <Field
+            data-testid="userEmail"
             id="inputCreateEvent"
             name="userEmail"
             type="email"
@@ -62,6 +42,7 @@ function CreateEvent() {
           <label>Date:</label>
           <ErrorMessage name="userDate" component="span" />
           <Field
+            data-testid="userDate"
             id="inputCreateEvent"
             name="userDate"
             type="date"
@@ -73,5 +54,3 @@ function CreateEvent() {
     </div>
   );
 }
-
-export default CreateEvent;

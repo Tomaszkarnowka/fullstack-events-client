@@ -1,8 +1,8 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import Home from './pages/Home';
-import CreateEvent from './pages/CreateEvent';
-import EditEvent from './pages/EditEvent';
+import EventsContainer from './pages/EventsContainer';
+import EditEventContainer from './pages/EditEventContainer';
+import CreateEventContainer from './pages/CreateEventContainer';
 function App() {
   return (
     <div className="App">
@@ -13,9 +13,9 @@ function App() {
         </div>
 
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/create-event" element={<CreateEvent />} />
-          <Route path="/edit-event/:id" element={<EditEvent />} />
+          <Route path="/" element={<EventsContainer />} />
+          <Route path="/create-event" element={<CreateEventContainer />} />
+          <Route path="/edit-event/:id" element={<EditEventContainer />} />
         </Routes>
       </Router>
     </div>

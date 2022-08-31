@@ -1,59 +1,42 @@
 import React from 'react';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 
-function Home() {
-  const [listOfUsers, setListOfUsers] = useState([]);
-  let navigate = useNavigate();
-  const fetchData = async () => {
-    try {
-      let response = await axios.get('http://localhost:3001/events');
-      if (response.status === 200) {
-        setListOfUsers(response.data);
-      } else {
-        console.log('Error fetching event list');
-      }
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const deleteEvent = async (id) => {
-    try {
-      await axios.delete(`http://localhost:3001/events/${id}`);
-
-      await fetchData();
-    } catch (err) {
-      console.log(err);
-    }
-  };
+export default function Home({ events, onDelete }) {
+  if (events.length === 0) {
+    return <div>No events</div>;
+  }
 
   return (
     <div>
-      {listOfUsers.map((value, key) => {
+      {events.map((event) => {
         return (
-          <div key={value.id} className="event">
-            <div className="firstName">{value.userFirstName}</div>
-            <div className="secondName">{value.userSecondName}</div>
-            <div className="email">{value.userEmail}</div>
-            <div className="date">
-              {dayjs(value.userDate).format('DD/MM/YYYY')}
+          <div key={event.id} className="event" data-testid="event">
+            <div className="firstName" data-testid="firstName">
+              {event.userFirstName}
+            </div>
+            <div className="secondName" data-testid="secondName">
+              {event.userSecondName}
+            </div>
+            <div className="email" data-testid="userEmail">
+              {event.userEmail}
+            </div>
+            <div className="date" data-testid="userDate">
+              {dayjs(event.userDate).format('DD/MM/YYYY')}
             </div>
             <div className="buttons">
-              <button
+              <Link
+                element="button"
                 className="edit"
-                onClick={() => {
-                  navigate(`/edit-event/${value.id}`);
-                }}
+                to={`/edit-event/${event.id}`}
               >
                 Edit
-              </button>
-              <button className="delete" onClick={() => deleteEvent(value.id)}>
+              </Link>
+              <button
+                className="delete"
+                data-testid={event.id}
+                onClick={() => onDelete(event.id)}
+              >
                 Delete
               </button>
             </div>
@@ -63,5 +46,3 @@ function Home() {
     </div>
   );
 }
-
-export default Home;
