@@ -25,5 +25,6 @@ dialect: "mysql"
 1. cd into client directory and run ```npm i``` in order to install node_modules.
 
 2. Finally, run ```npm start```, react will open a new tab with the web application.
+3. To run tests ```npm test```
 
 Author
