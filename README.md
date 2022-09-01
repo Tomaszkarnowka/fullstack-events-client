@@ -17,7 +17,7 @@ dialect: "mysql"
 
 5. Use the ```recruitmentdb``` database and execute the ```config.sql``` dump file to create a ```recruitmentdb``` table with some content.
 
-6. In the ```server``` directory, ```run npm``` i in order to install node_modules.
+6. In the ```server``` directory, run ``` npm i``` in order to install node_modules.
 
 7. Finally, run ```npm run``` in order to start the server.
 
